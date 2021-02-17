@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Komputer Store</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,10 +15,26 @@
     <main>
         <div class="container">
             <div class="block">
-                <h3>Joe Banker</h3>
+                <h3>Bank</h3>
+                <table>
+                    <tr>
+                        <td>Balance</td>
+                        <td class="right-column"><span id="balance">0</span> €</td>
+                    </tr>
+                </table>
             </div>
             <div class="block">
                 <h3>Work</h3>
+                <table>
+                    <tr>
+                        <td>Pay</td>
+                        <td class="right-column"><span id="pay">0</span> €</td>
+                    </tr>
+                </table>
+                <div class="container">
+                    <button id="bank">Bank</button>
+                    <button id="work">Work</button>
+                </div>
             </div>
             <div class="block">
                 <h3>Laptops</h3>
@@ -30,5 +46,6 @@
             </div>
         </div>
     </main>
+    <script src="app.js"></script>
 </body>
 </html>

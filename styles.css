@@ -31,5 +31,54 @@ h3 {
     border-radius: 5px;
     padding: 15px;
     margin: 5px;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.right-column {
+    text-align: right;
+}
+
+button {
+    padding: 10px;
     flex-grow: 1;
+    margin-right: 1px;
+    margin-left: 1px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+#work {
+    background-color: steelblue;
+    color: white;
+}
+
+#work:hover {
+    background-color: rgb(33, 88, 133);
+}
+
+#work:active {
+    background-color: whitesmoke;
+    color: rgb(33, 88, 133);
+}
+
+#bank {
+    background-color: goldenrod;
+    color: white;
+}
+
+#bank:hover {
+    background-color: darkgoldenrod;
+}
+
+#bank:active {
+    background-color: whitesmoke;
+    color: darkgoldenrod;
 }
