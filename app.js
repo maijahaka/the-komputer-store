@@ -7,6 +7,7 @@ const outstandingLoanSpan = document.getElementById("outstandingLoan")
 const workButton = document.getElementById("work")
 const bankButton = document.getElementById("bank")
 const getLoanButton = document.getElementById("getLoan")
+const repayLoanButton = document.getElementById("repayLoan")
 
 const work = function() {
     console.log(`Worked! Pay increased by ${payEearnedPerClick} €.`)
@@ -14,31 +15,34 @@ const work = function() {
     paySpan.innerText = pay
     console.log(`Pay balance is now ${pay} €.`)
     bankButton.disabled = false
+    repayLoanButton.disabled = false
 }
 
-const getInstalment = (pay) => {
+const getInstalment = (amount) => {
     if (outstandingLoan === 0) {
         return 0
     }
 
-    if (outstandingLoan < 0.1 * pay) {
+    if (outstandingLoan < amount) {
         return outstandingLoan
     }
 
-    return 0.1 * pay
+    return amount
 }
 
 const checkLoanStatus = () => {
     if (outstandingLoan === 0) {
         outstandingLoanTr.style.visibility = 'hidden'
+        repayLoanButton.style.visibility = 'hidden'
         getLoanButton.disabled = false
     } else {
         outstandingLoanSpan.innerText = outstandingLoan
         outstandingLoanTr.style.visibility = 'visible'
+        repayLoanButton.style.visibility = 'visible'
     }
 }
 
-const repayLoan = function(instalment) {
+const payInstalment = function(instalment) {
     console.log(`Transferred ${instalment} € towards the outstanding loan balance.`)
     outstandingLoan -= instalment
     console.log(`Outstanding loan balance is now ${outstandingLoan} €.`)
@@ -47,11 +51,11 @@ const repayLoan = function(instalment) {
 const bank = function() {
     console.log(`Attempting to transfer ${pay} € to the bank.`)
     
-    const instalment = getInstalment(pay)
+    const instalment = getInstalment(payTowardsLoanFactor * pay)
     const transferredAmount = pay - instalment
 
     if (instalment > 0) {
-        repayLoan(instalment)
+        payInstalment(instalment)
     }
 
     checkLoanStatus()
@@ -62,6 +66,7 @@ const bank = function() {
     pay = 0
     paySpan.innerText = pay
     bankButton.disabled = true
+    repayLoanButton.disabled = true
     
     console.log(`Account balance is now ${balance} €.`)
 }
@@ -133,7 +138,24 @@ const getLoan = function() {
     console.log(`Loan request approved. Account balance is now ${balance} €. Outstanding loan is now ${outstandingLoan} €.`)
 }
 
+const repayLoan = () => {
+    const instalment = getInstalment(pay)
+    payInstalment(instalment)
+    checkLoanStatus()
+
+    pay -= instalment
+    paySpan.innerText = pay
+
+    console.log(`Pay balance is now ${pay} €.`)
+
+    if (pay === 0) {
+        bankButton.disabled = true
+        repayLoanButton.disabled = true
+    }
+}
+
 const payEearnedPerClick = 100
+const payTowardsLoanFactor = 0.1
 
 let balance = 0
 let pay = 0
@@ -142,3 +164,4 @@ let outstandingLoan = 0
 workButton.addEventListener('click', work)
 bankButton.addEventListener('click', bank)
 getLoanButton.addEventListener('click', getLoan)
+repayLoanButton.addEventListener('click', repayLoan)
