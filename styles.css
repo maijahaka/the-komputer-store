@@ -87,6 +87,12 @@ button {
     color: darkgoldenrod;
 }
 
+#bank:disabled {
+    background-color: rgb(128, 128, 128);
+    color: whitesmoke;
+    cursor: not-allowed;
+}
+
 #getLoan {
     background-color: seagreen;
     color: white;
@@ -99,4 +105,10 @@ button {
 #getLoan:active {
     background-color: whitesmoke;
     color: rgb(19, 97, 53);
+}
+
+#getLoan:disabled {
+    background-color: rgb(128, 128, 128);
+    color: whitesmoke;
+    cursor: not-allowed;
 }

@@ -9,9 +9,11 @@ const bankButton = document.getElementById("bank")
 const getLoanButton = document.getElementById("getLoan")
 
 const work = function() {
-    console.log(`Worked! Pay increased by ${payEearnedPerClick} €. Pay balance is now ${pay} €.`)
+    console.log(`Worked! Pay increased by ${payEearnedPerClick} €.`)
     pay += payEearnedPerClick
     paySpan.innerText = pay
+    console.log(`Pay balance is now ${pay} €.`)
+    bankButton.disabled = false
 }
 
 const getInstalment = (pay) => {
@@ -26,16 +28,19 @@ const getInstalment = (pay) => {
     return 0.1 * pay
 }
 
+const checkLoanStatus = () => {
+    if (outstandingLoan === 0) {
+        outstandingLoanTr.style.visibility = 'hidden'
+        getLoanButton.disabled = false
+    } else {
+        outstandingLoanSpan.innerText = outstandingLoan
+        outstandingLoanTr.style.visibility = 'visible'
+    }
+}
+
 const repayLoan = function(instalment) {
     console.log(`Transferred ${instalment} € towards the outstanding loan balance.`)
     outstandingLoan -= instalment
-
-    if (outstandingLoan != 0) {
-        outstandingLoanSpan.innerText = outstandingLoan
-    } else {
-        outstandingLoanTr.style.visibility = 'hidden'
-    }
-
     console.log(`Outstanding loan balance is now ${outstandingLoan} €.`)
 }
 
@@ -48,19 +53,22 @@ const bank = function() {
     if (instalment > 0) {
         repayLoan(instalment)
     }
+
+    checkLoanStatus()
     
     console.log(`Transferred ${transferredAmount} € to the bank.`)
     balance += transferredAmount
     balanceSpan.innerText = balance
     pay = 0
     paySpan.innerText = pay
+    bankButton.disabled = true
+    
     console.log(`Account balance is now ${balance} €.`)
 }
 
 requestAmountInput = message => {
     return prompt(
-        `${message} Please enter an amount (€):`
-        , 0)
+        `${message} Please enter an amount (€):`, 0)
 }
 
 const getLoanAmount = function() {
@@ -90,7 +98,7 @@ const getLoanAmount = function() {
         console.log(`Applied for a loan of ${amount} €.`)
 
         if (amount > 2 * balance) {
-            console.log('Loan request rejected.')
+            console.log('Loan request rejected due to insufficient balance.')
             message = `Loan request rejected. The maximum loan you can apply for is ${2 * balance} €.`
             continue
         }
@@ -115,11 +123,12 @@ const getLoan = function() {
     }
 
     outstandingLoan = amount
-    outstandingLoanTr.style.visibility = 'visible'
-    outstandingLoanSpan.innerText = outstandingLoan
+    checkLoanStatus()
     
     balance += amount
     balanceSpan.innerText = balance
+
+    getLoanButton.disabled = true
 
     console.log(`Loan request approved. Account balance is now ${balance} €. Outstanding loan is now ${outstandingLoan} €.`)
 }
