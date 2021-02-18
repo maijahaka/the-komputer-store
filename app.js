@@ -9,17 +9,52 @@ const bankButton = document.getElementById("bank")
 const getLoanButton = document.getElementById("getLoan")
 
 const work = function() {
-    console.log(`Worked! Pay increased by ${payEearnedPerClick} €.`)
+    console.log(`Worked! Pay increased by ${payEearnedPerClick} €. Pay balance is now ${pay} €.`)
     pay += payEearnedPerClick
     paySpan.innerText = pay
 }
 
+const getInstalment = (pay) => {
+    if (outstandingLoan === 0) {
+        return 0
+    }
+
+    if (outstandingLoan < 0.1 * pay) {
+        return outstandingLoan
+    }
+
+    return 0.1 * pay
+}
+
+const repayLoan = function(instalment) {
+    console.log(`Transferred ${instalment} € towards the outstanding loan balance.`)
+    outstandingLoan -= instalment
+
+    if (outstandingLoan != 0) {
+        outstandingLoanSpan.innerText = outstandingLoan
+    } else {
+        outstandingLoanTr.style.visibility = 'hidden'
+    }
+
+    console.log(`Outstanding loan balance is now ${outstandingLoan} €.`)
+}
+
 const bank = function() {
-    console.log(`Transferred ${pay} € to the bank.`)
-    balance += pay
+    console.log(`Attempting to transfer ${pay} € to the bank.`)
+    
+    const instalment = getInstalment(pay)
+    const transferredAmount = pay - instalment
+
+    if (instalment > 0) {
+        repayLoan(instalment)
+    }
+    
+    console.log(`Transferred ${transferredAmount} € to the bank.`)
+    balance += transferredAmount
     balanceSpan.innerText = balance
     pay = 0
     paySpan.innerText = pay
+    console.log(`Account balance is now ${balance} €.`)
 }
 
 requestAmountInput = message => {
