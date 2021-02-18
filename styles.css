@@ -43,6 +43,10 @@ table {
     text-align: right;
 }
 
+#outstandingLoanTr {
+    visibility: hidden;
+}
+
 button {
     padding: 10px;
     flex-grow: 1;
@@ -81,4 +85,18 @@ button {
 #bank:active {
     background-color: whitesmoke;
     color: darkgoldenrod;
+}
+
+#getLoan {
+    background-color: seagreen;
+    color: white;
+}
+
+#getLoan:hover {
+    background-color: rgb(19, 97, 53);
+}
+
+#getLoan:active {
+    background-color: whitesmoke;
+    color: rgb(19, 97, 53);
 }
