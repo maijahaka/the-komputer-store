@@ -82,7 +82,11 @@ const getLoan = function() {
     outstandingLoan = amount
     outstandingLoanTr.style.visibility = 'visible'
     outstandingLoanSpan.innerText = outstandingLoan
-    console.log(`Loan request approved. Outstanding loan is now ${outstandingLoan} €.`)
+    
+    balance += amount
+    balanceSpan.innerText = balance
+
+    console.log(`Loan request approved. Account balance is now ${balance} €. Outstanding loan is now ${outstandingLoan} €.`)
 }
 
 const payEearnedPerClick = 100
