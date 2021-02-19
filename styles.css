@@ -15,7 +15,7 @@ main {
     padding-right: 100px;
 }
 
-h3, h4 {
+h2, h3, h4 {
     color: darkslategray;
     font-family: 'Montserrat Alternates', sans-serif;
 }
@@ -96,7 +96,7 @@ button {
     cursor: not-allowed;
 }
 
-#getLoan {
+#getLoan{
     background-color: seagreen;
     color: white;
 }
@@ -110,7 +110,7 @@ button {
     color: rgb(19, 97, 53);
 }
 
-#getLoan:disabled {
+#getLoan:disabled, #buyNow:disabled {
     background-color: rgb(128, 128, 128);
     color: whitesmoke;
     cursor: not-allowed;
@@ -137,6 +137,26 @@ button {
     cursor: not-allowed;
 }
 
+#buyNow {
+    background-color: darkmagenta;
+    color: white;
+}
+
+#buyNow:hover {
+    background-color: rgb(77, 1, 77);
+}
+
+#buyNow:active {
+    background-color: whitesmoke;
+    color: rgb(77, 1, 77);
+}
+
+#buyNow:disabled {
+    background-color: rgb(128, 128, 128);
+    color: whitesmoke;
+    cursor: not-allowed;
+}
+
 select {
     width: 100%;
     font-size: 16px;
@@ -149,4 +169,33 @@ select {
 #features {
     font-size: 14px;
     list-style-type: none;
+}
+
+img {
+    height: 150px;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
+#laptopInfo {
+    width: 50%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#laptopPrice {
+    color: darkslategray;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#cannotAffordMessage {
+    color: darkred;
+    text-align: center;
+    height: 55px;
+    padding-top: 5px;
+    visibility: hidden;
 }

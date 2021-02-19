@@ -12,6 +12,9 @@ const repayLoanButton = document.getElementById("repayLoan")
 const laptopsSelect = document.getElementById("laptops")
 
 const featuresDiv = document.getElementById("features")
+const laptopPhotoDiv = document.getElementById("laptopPhoto")
+const laptopInfoDiv = document.getElementById("laptopInfo")
+const laptopPriceDiv = document.getElementById("laptopPrice")
 
 const work = function() {
     console.log(`Worked! Pay increased by ${payEearnedPerClick} €.`)
@@ -166,6 +169,16 @@ const renderLaptop = (laptop) => {
         featuresList.appendChild(item)
     })
     featuresDiv.innerHTML = featuresList.innerHTML
+
+    laptopPhotoDiv.innerHTML = `<img src="${laptop.imageUrl}">`
+
+    laptopInfoDiv.innerHTML =
+    `
+        <h2>${laptop.name}</h2>
+        <p>${laptop.description}</p>
+    `
+
+    laptopPriceDiv.innerText = `${laptop.price} €`
 }
 
 const selectLaptop = (event) => {
@@ -188,7 +201,9 @@ let laptops = [
             "It has a screen.",
             "It has a keyboard."
         ],
-        description: "Great for casual web browsing."
+        description: "Great for casual web browsing.",
+        imageUrl: "/images/basic-laptop.jpg",
+        price: 600
     },
     {
         name: "Premium laptop",
@@ -196,7 +211,9 @@ let laptops = [
             "The screen renders colours perfectly.",
             "It has a soft-touch keyboard."
         ],
-        description: "Perfect for working in a café while drinking a latte."
+        description: "Perfect for working in a café while drinking a latte.",
+        imageUrl: "/images/premium-laptop.jpg",
+        price: 1800
     },
     {
         name: "Gaming laptop",
@@ -204,7 +221,9 @@ let laptops = [
             "It offers ultra-high FPS.",
             "The keyboard has LED effects."
         ],
-        description: "Name a game and you can play it with this laptop."
+        description: "Name a game and you can play it with this laptop.",
+        imageUrl: "/images/gaming-laptop.jpg",
+        price: 2200
     },
     {
         name: "Professional laptop",
@@ -212,7 +231,9 @@ let laptops = [
             "It has a built-in privacy screen.",
             "It has a quiet keyboard.",
         ],
-        description: "Ideal for doing a bootcamp on JavaScript."
+        description: "Ideal for doing a bootcamp on JavaScript.",
+        imageUrl: "/images/professional-laptop.jpg",
+        price: 3200
     }
 ]
 
