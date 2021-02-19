@@ -9,6 +9,10 @@ const bankButton = document.getElementById("bank")
 const getLoanButton = document.getElementById("getLoan")
 const repayLoanButton = document.getElementById("repayLoan")
 
+const laptopsSelect = document.getElementById("laptops")
+
+const featuresDiv = document.getElementById("features")
+
 const work = function() {
     console.log(`Worked! Pay increased by ${payEearnedPerClick} €.`)
     pay += payEearnedPerClick
@@ -154,6 +158,22 @@ const repayLoan = () => {
     }
 }
 
+const renderLaptop = (laptop) => {
+    const featuresList = document.createElement('ul')
+    laptop.features.forEach(feature => {
+        const item = document.createElement('li')
+        item.innerText = feature
+        featuresList.appendChild(item)
+    })
+    featuresDiv.innerHTML = featuresList.innerHTML
+}
+
+const selectLaptop = (event) => {
+    console.log(`Selected ${event.target.value}.`)
+    const laptop = laptops[event.target.selectedIndex]
+    renderLaptop(laptop)
+}
+
 const payEearnedPerClick = 100
 const payTowardsLoanFactor = 0.1
 
@@ -161,7 +181,52 @@ let balance = 0
 let pay = 0
 let outstandingLoan = 0
 
+let laptops = [
+    {
+        name: "Basic laptop",
+        features: [
+            "It has a screen.",
+            "It has a keyboard."
+        ],
+        description: "Great for casual web browsing."
+    },
+    {
+        name: "Premium laptop",
+        features: [
+            "The screen renders colours perfectly.",
+            "It has a soft-touch keyboard."
+        ],
+        description: "Perfect for working in a café while drinking a latte."
+    },
+    {
+        name: "Gaming laptop",
+        features: [
+            "It offers ultra-high FPS.",
+            "The keyboard has LED effects."
+        ],
+        description: "Name a game and you can play it with this laptop."
+    },
+    {
+        name: "Professional laptop",
+        features: [
+            "It has a built-in privacy screen.",
+            "It has a quiet keyboard.",
+        ],
+        description: "Ideal for doing a bootcamp on JavaScript."
+    }
+]
+
 workButton.addEventListener('click', work)
 bankButton.addEventListener('click', bank)
 getLoanButton.addEventListener('click', getLoan)
 repayLoanButton.addEventListener('click', repayLoan)
+
+laptopsSelect.addEventListener('change', selectLaptop)
+
+laptops.forEach(laptop => {
+    const option = document.createElement('option')
+    option.innerText = laptop.name
+    laptopsSelect.appendChild(option)
+})
+
+renderLaptop(laptops[0])

@@ -15,9 +15,13 @@ main {
     padding-right: 100px;
 }
 
-h3 {
+h3, h4 {
     color: darkslategray;
     font-family: 'Montserrat Alternates', sans-serif;
+}
+
+h4 {
+    margin-bottom: 5px;
 }
 
 .container {
@@ -131,4 +135,18 @@ button {
     background-color: rgb(128, 128, 128);
     color: whitesmoke;
     cursor: not-allowed;
+}
+
+select {
+    width: 100%;
+    font-size: 16px;
+    padding: 1px;
+    border: 1px solid darkslategray;
+    border-radius: 5px;
+    outline: none;
+}
+
+#features {
+    font-size: 14px;
+    list-style-type: none;
 }
