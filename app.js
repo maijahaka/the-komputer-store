@@ -8,6 +8,7 @@ const workButton = document.getElementById("work")
 const bankButton = document.getElementById("bank")
 const getLoanButton = document.getElementById("getLoan")
 const repayLoanButton = document.getElementById("repayLoan")
+const buyNowButton = document.getElementById("buyNow")
 
 const laptopsSelect = document.getElementById("laptops")
 
@@ -15,6 +16,7 @@ const featuresDiv = document.getElementById("features")
 const laptopPhotoDiv = document.getElementById("laptopPhoto")
 const laptopInfoDiv = document.getElementById("laptopInfo")
 const laptopPriceDiv = document.getElementById("laptopPrice")
+const cannotAffordMessageDiv = document.getElementById("cannotAffordMessage")
 
 const work = function() {
     console.log(`Worked! Pay increased by ${payEearnedPerClick} €.`)
@@ -74,6 +76,7 @@ const bank = function() {
     paySpan.innerText = pay
     bankButton.disabled = true
     repayLoanButton.disabled = true
+    cannotAffordMessageDiv.style.visibility = 'hidden'
     
     console.log(`Account balance is now ${balance} €.`)
 }
@@ -140,7 +143,10 @@ const getLoan = function() {
     balance += amount
     balanceSpan.innerText = balance
 
+    loanForLaptopReceived = true
+
     getLoanButton.disabled = true
+    cannotAffordMessageDiv.style.visibility = 'hidden'
 
     console.log(`Loan request approved. Account balance is now ${balance} €. Outstanding loan is now ${outstandingLoan} €.`)
 }
@@ -178,13 +184,33 @@ const renderLaptop = (laptop) => {
         <p>${laptop.description}</p>
     `
 
+    cannotAffordMessageDiv.style.visibility = 'hidden'
     laptopPriceDiv.innerText = `${laptop.price} €`
 }
 
 const selectLaptop = (event) => {
     console.log(`Selected ${event.target.value}.`)
-    const laptop = laptops[event.target.selectedIndex]
-    renderLaptop(laptop)
+    selectedLaptop = laptops[event.target.selectedIndex]
+    renderLaptop(selectedLaptop)
+}
+
+const buyNow = () => {
+    if (selectedLaptop.price <= balance) {
+        console.log(`Bought ${selectedLaptop.name} with ${selectedLaptop.price} €.`)
+        balance -= selectedLaptop.price
+        balanceSpan.innerText = balance
+        console.log(`Account balance is now ${balance} €.`)
+        loanForLaptopReceived = false
+        
+        if (balance === 0) {
+            getLoanButton.disabled = true
+        }
+
+        alert(`Congratulations! You are now the owner of a ${selectedLaptop.name}.`)
+    } else {
+        console.log(`Cannot afford to buy ${selectedLaptop.name}. Missing ${selectedLaptop.price - balance} €.`)
+        cannotAffordMessageDiv.style.visibility = 'visible'
+    }
 }
 
 const payEearnedPerClick = 100
@@ -193,6 +219,8 @@ const payTowardsLoanFactor = 0.1
 let balance = 0
 let pay = 0
 let outstandingLoan = 0
+
+let loanForLaptopReceived = false
 
 let laptops = [
     {
@@ -237,10 +265,13 @@ let laptops = [
     }
 ]
 
+let selectedLaptop = laptops[0]
+
 workButton.addEventListener('click', work)
 bankButton.addEventListener('click', bank)
 getLoanButton.addEventListener('click', getLoan)
 repayLoanButton.addEventListener('click', repayLoan)
+buyNowButton.addEventListener('click', buyNow)
 
 laptopsSelect.addEventListener('change', selectLaptop)
 
@@ -250,4 +281,4 @@ laptops.forEach(laptop => {
     laptopsSelect.appendChild(option)
 })
 
-renderLaptop(laptops[0])
+renderLaptop(selectedLaptop)
