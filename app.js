@@ -1,173 +1,73 @@
+import { getLoanAmount } from './inputHandler.js'
+
 const outstandingLoanTr = document.getElementById("outstandingLoanTr")
 
-const balanceSpan = document.getElementById("balance")
-const paySpan = document.getElementById("pay")
-const outstandingLoanSpan = document.getElementById("outstandingLoan")
+const balanceSpan = document.getElementById("balanceSpan")
+const outstandingLoanSpan = document.getElementById("outstandingLoanSpan")
+const paySpan = document.getElementById("paySpan")
 
-const workButton = document.getElementById("work")
-const bankButton = document.getElementById("bank")
-const getLoanButton = document.getElementById("getLoan")
-const repayLoanButton = document.getElementById("repayLoan")
-const buyNowButton = document.getElementById("buyNow")
+const featuresDiv = document.getElementById("featuresDiv")
+const laptopPhotoDiv = document.getElementById("laptopPhotoDiv")
+const laptopInfoDiv = document.getElementById("laptopInfoDiv")
+const cannotAffordMessageDiv = document.getElementById("cannotAffordMessageDiv")
+const laptopPriceDiv = document.getElementById("laptopPriceDiv")
 
-const laptopsSelect = document.getElementById("laptops")
+const laptopsSelect = document.getElementById("laptopsSelect")
 
-const featuresDiv = document.getElementById("features")
-const laptopPhotoDiv = document.getElementById("laptopPhoto")
-const laptopInfoDiv = document.getElementById("laptopInfo")
-const laptopPriceDiv = document.getElementById("laptopPrice")
-const cannotAffordMessageDiv = document.getElementById("cannotAffordMessage")
+const getLoanButton = document.getElementById("getLoanButton")
+const bankButton = document.getElementById("bankButton")
+const workButton = document.getElementById("workButton")
+const repayLoanButton = document.getElementById("repayLoanButton")
+const buyNowButton = document.getElementById("buyNowButton")
 
-const work = function() {
-    console.log(`Worked! Pay increased by ${payEearnedPerClick} €.`)
-    pay += payEearnedPerClick
-    paySpan.innerText = pay
-    console.log(`Pay balance is now ${pay} €.`)
-    bankButton.disabled = false
-    repayLoanButton.disabled = false
-}
-
-const getInstalment = (amount) => {
-    if (outstandingLoan === 0) {
-        return 0
-    }
-
-    if (outstandingLoan < amount) {
-        return outstandingLoan
-    }
-
-    return amount
-}
-
-const checkLoanStatus = () => {
-    if (outstandingLoan === 0) {
+const manageOutstandingLoanTr = () => {
+    if (outstandingLoan > 0) {
+        outstandingLoanTr.style.visibility = 'visible'
+    } else {
         outstandingLoanTr.style.visibility = 'hidden'
-        repayLoanButton.style.visibility = 'hidden'
+    }
+}
+
+const manageBankButton = () => {
+    if (pay > 0) {
+        bankButton.disabled = false
+    } else {
+        bankButton.disabled = true
+    }
+}
+
+const manageGetLoanButton = () => {
+    // Can only get a new loan if the previous loan is paid. Only one loan per laptop.
+    if (balance > 0 && outstandingLoan === 0 && !loanForLaptopReceived) {
         getLoanButton.disabled = false
     } else {
-        outstandingLoanSpan.innerText = outstandingLoan
-        outstandingLoanTr.style.visibility = 'visible'
-        repayLoanButton.style.visibility = 'visible'
+        getLoanButton.disabled = true
     }
 }
 
-const payInstalment = function(instalment) {
-    console.log(`Transferred ${instalment} € towards the outstanding loan balance.`)
-    outstandingLoan -= instalment
-    console.log(`Outstanding loan balance is now ${outstandingLoan} €.`)
-}
-
-const bank = function() {
-    console.log(`Attempting to transfer ${pay} € to the bank.`)
+const manageRepayLoanButton = () => {
+    if (outstandingLoan > 0) {
+        repayLoanButton.style.visibility = 'visible'        
+    } else {
+        repayLoanButton.style.visibility = 'hidden'
+    }
     
-    const instalment = getInstalment(payTowardsLoanFactor * pay)
-    const transferredAmount = pay - instalment
-
-    if (instalment > 0) {
-        payInstalment(instalment)
-    }
-
-    checkLoanStatus()
-    
-    console.log(`Transferred ${transferredAmount} € to the bank.`)
-    balance += transferredAmount
-    balanceSpan.innerText = balance
-    pay = 0
-    paySpan.innerText = pay
-    bankButton.disabled = true
-    repayLoanButton.disabled = true
-    cannotAffordMessageDiv.style.visibility = 'hidden'
-    
-    console.log(`Account balance is now ${balance} €.`)
-}
-
-requestAmountInput = message => {
-    return prompt(
-        `${message} Please enter an amount (€):`, 0)
-}
-
-const getLoanAmount = function() {
-    let message = 'Applying for a loan.'
-
-    while (true) {
-        const input = requestAmountInput(message)
-        
-        if (input === null) {
-            return null
-        }
-        
-        if (input.trim() == '') {
-            console.log('The input was empty.')
-            message = 'Your input was empty. Please try again.'
-            continue
-        }
-
-        const amount = Number(input)
-        
-        if (isNaN(amount) || amount < 0) {
-            console.log(`Invalid input: ${input}.`)
-            message = 'Invalid input. Please enter a valid positive number.'
-            continue
-        }
-
-        console.log(`Applied for a loan of ${amount} €.`)
-
-        if (amount > 2 * balance) {
-            console.log('Loan request rejected due to insufficient balance.')
-            message = `Loan request rejected. The maximum loan you can apply for is ${2 * balance} €.`
-            continue
-        }
-
-        return amount
-    }
-}
-
-const getLoan = function() {
-    console.log('Attempting to get a loan.')
-
-    const amount = getLoanAmount()
-
-    if (amount === null) {
-        console.log('Loan request cancelled.')
-        return
-    }
-
-    if (amount === 0) {
-        console.log('Loan request will not be processed, as the requested amount is 0 €.')
-        return
-    }
-
-    outstandingLoan = amount
-    checkLoanStatus()
-    
-    balance += amount
-    balanceSpan.innerText = balance
-
-    loanForLaptopReceived = true
-
-    getLoanButton.disabled = true
-    cannotAffordMessageDiv.style.visibility = 'hidden'
-
-    console.log(`Loan request approved. Account balance is now ${balance} €. Outstanding loan is now ${outstandingLoan} €.`)
-}
-
-const repayLoan = () => {
-    const instalment = getInstalment(pay)
-    payInstalment(instalment)
-    checkLoanStatus()
-
-    pay -= instalment
-    paySpan.innerText = pay
-
-    console.log(`Pay balance is now ${pay} €.`)
-
-    if (pay === 0) {
-        bankButton.disabled = true
+    if (pay > 0) {
+        repayLoanButton.disabled = false
+    } else {
         repayLoanButton.disabled = true
     }
 }
 
-const renderLaptop = (laptop) => {
+const showCannotAffordMessage = () => {
+    cannotAffordMessageDiv.style.visibility = 'visible'
+}
+
+const hideCannotAffordMessage = () => {
+    cannotAffordMessageDiv.style.visibility = 'hidden'
+}
+
+const renderLaptop = laptop => {
     const featuresList = document.createElement('ul')
     laptop.features.forEach(feature => {
         const item = document.createElement('li')
@@ -184,37 +84,149 @@ const renderLaptop = (laptop) => {
         <p>${laptop.description}</p>
     `
 
-    cannotAffordMessageDiv.style.visibility = 'hidden'
     laptopPriceDiv.innerText = `${laptop.price} €`
+
+    hideCannotAffordMessage()
 }
 
-const selectLaptop = (event) => {
-    console.log(`Selected ${event.target.value}.`)
-    selectedLaptop = laptops[event.target.selectedIndex]
-    renderLaptop(selectedLaptop)
+const work = () => {
+    pay += payEearnedPerClick
+    paySpan.innerText = pay
+
+    manageBankButton()
+    manageRepayLoanButton()
 }
 
-const buyNow = () => {
+const bank = amount => {
+    balance += amount
+    balanceSpan.innerText = balance
+
+    pay -= amount
+    paySpan.innerText = pay
+
+    manageBankButton()
+    manageGetLoanButton()
+    manageRepayLoanButton()
+    hideCannotAffordMessage()
+}
+
+const getLoan = amount => {
+    outstandingLoan += amount
+    outstandingLoanSpan.innerText = outstandingLoan
+    
+    balance += amount
+    balanceSpan.innerText = balance
+
+    loanForLaptopReceived = true
+
+    manageOutstandingLoanTr()
+    manageGetLoanButton()
+    manageRepayLoanButton()
+    hideCannotAffordMessage()
+}
+
+const getInstalment = amount => {
+    if (outstandingLoan === 0) {
+        return 0
+    }
+
+    if (outstandingLoan < amount) {
+        return outstandingLoan
+    }
+
+    return amount
+}
+
+const payInstalment = instalment => {
+    pay -= instalment
+    paySpan.innerText = pay
+
+    outstandingLoan -= instalment
+    outstandingLoanSpan.innerText = outstandingLoan
+
+    manageOutstandingLoanTr()
+    manageBankButton()
+    manageGetLoanButton()
+    manageRepayLoanButton()
+}
+
+const buyLaptop = laptop => {
+    balance -= laptop.price
+    balanceSpan.innerText = balance
+    
+    loanForLaptopReceived = false
+    
+    manageGetLoanButton()
+}
+
+const handleWorkButtonClick = () => {
+    work()
+    console.log(`Worked! Pay increased by ${payEearnedPerClick} €. Pay balance is now ${pay} €.`)
+}
+
+const handleBankButtonClick = () => {
+    console.log(`Attempting to transfer ${pay} € to the bank.`)
+
+    // a part of the pay balance is used to repay any outstanding loan
+    const instalment = getInstalment(minimumInstalmentFactor * pay)
+    if (instalment > 0) {
+        payInstalment(instalment)
+        console.log(`Transferred ${instalment} € towards the outstanding loan balance. Outstanding loan balance is now ${outstandingLoan} €.`)
+    }
+
+    const transferredAmount = pay
+    bank(transferredAmount)
+    console.log(`Transferred ${transferredAmount} € to the bank. Account balance is now ${balance} €.`)
+}
+
+const handleGetLoanButtonClick = () => {
+    console.log('Attempting to get a loan.')
+
+    // request loan amount from the user
+    const amount = getLoanAmount(balance)
+
+    if (amount === null) {
+        console.log('Loan request cancelled.')
+        return
+    }
+
+    if (amount === 0) {
+        console.log('Loan request will not be processed, as the requested amount is 0 €.')
+        return
+    }
+
+    getLoan(amount)
+    console.log(`Loan request approved. Account balance is now ${balance} €. Outstanding loan is now ${outstandingLoan} €.`)
+}
+
+const handleRepayLoanButtonClick = () => {
+    const instalment = getInstalment(pay)
+    payInstalment(instalment)
+    console.log(`Transferred ${instalment} € towards the outstanding loan balance. Outstanding loan balance is now ${outstandingLoan} €. Pay balance is now ${pay} €.`)
+}
+
+const handleBuyNowButtonClick = () => {
     if (selectedLaptop.price <= balance) {
-        console.log(`Bought ${selectedLaptop.name} with ${selectedLaptop.price} €.`)
-        balance -= selectedLaptop.price
-        balanceSpan.innerText = balance
-        console.log(`Account balance is now ${balance} €.`)
-        loanForLaptopReceived = false
-        
-        if (balance === 0) {
-            getLoanButton.disabled = true
-        }
-
+        buyLaptop(selectedLaptop)
+        console.log(`Bought a ${selectedLaptop.name} with ${selectedLaptop.price} €. Account balance is now ${balance} €.`)
         alert(`Congratulations! You are now the owner of a ${selectedLaptop.name}.`)
     } else {
-        console.log(`Cannot afford to buy ${selectedLaptop.name}. Missing ${selectedLaptop.price - balance} €.`)
-        cannotAffordMessageDiv.style.visibility = 'visible'
+        console.log(`Cannot afford to buy a ${selectedLaptop.name}. Missing ${selectedLaptop.price - balance} €.`)
+        showCannotAffordMessage()
     }
 }
 
+const handleLaptopsSelectChange = event => {
+    selectedLaptop = laptops[event.target.selectedIndex]
+    console.log(`Selected ${event.target.value}.`)
+    renderLaptop(selectedLaptop)
+}
+
+// the amount of money earned when clicking the 'Work' button
 const payEearnedPerClick = 100
-const payTowardsLoanFactor = 0.1
+
+// the part of transfers to bank account that is used to repay loan
+const minimumInstalmentFactor = 0.1
 
 let balance = 0
 let pay = 0
@@ -267,13 +279,13 @@ let laptops = [
 
 let selectedLaptop = laptops[0]
 
-workButton.addEventListener('click', work)
-bankButton.addEventListener('click', bank)
-getLoanButton.addEventListener('click', getLoan)
-repayLoanButton.addEventListener('click', repayLoan)
-buyNowButton.addEventListener('click', buyNow)
+workButton.addEventListener('click', handleWorkButtonClick)
+bankButton.addEventListener('click', handleBankButtonClick)
+getLoanButton.addEventListener('click', handleGetLoanButtonClick)
+repayLoanButton.addEventListener('click', handleRepayLoanButtonClick)
+buyNowButton.addEventListener('click', handleBuyNowButtonClick)
 
-laptopsSelect.addEventListener('change', selectLaptop)
+laptopsSelect.addEventListener('change', handleLaptopsSelectChange)
 
 laptops.forEach(laptop => {
     const option = document.createElement('option')

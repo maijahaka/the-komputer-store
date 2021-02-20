@@ -24,6 +24,37 @@ h4 {
     margin-bottom: 5px;
 }
 
+table {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 10px;
+    flex-grow: 1;
+    margin: 1px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+select {
+    width: 100%;
+    padding: 1px;
+    border: 1px solid darkslategray;
+    border-radius: 5px;
+    outline: none;
+    font-size: medium;
+}
+
+img {
+    height: 150px;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
 .container {
     display: flex;
     justify-content: space-between;
@@ -38,11 +69,6 @@ h4 {
     width: 100%;
 }
 
-table {
-    width: 100%;
-    margin-bottom: 15px;
-}
-
 .right-column {
     text-align: right;
 }
@@ -51,151 +77,107 @@ table {
     visibility: hidden;
 }
 
-button {
-    padding: 10px;
-    flex-grow: 1;
-    margin: 1px;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-}
-
-#work {
-    background-color: steelblue;
-    color: white;
-}
-
-#work:hover {
-    background-color: rgb(33, 88, 133);
-}
-
-#work:active {
-    background-color: whitesmoke;
-    color: rgb(33, 88, 133);
-}
-
-#bank {
-    background-color: goldenrod;
-    color: white;
-}
-
-#bank:hover {
-    background-color: darkgoldenrod;
-}
-
-#bank:active {
-    background-color: whitesmoke;
-    color: darkgoldenrod;
-}
-
-#bank:disabled {
-    background-color: rgb(128, 128, 128);
-    color: whitesmoke;
-    cursor: not-allowed;
-}
-
-#getLoan{
-    background-color: seagreen;
-    color: white;
-}
-
-#getLoan:hover {
-    background-color: rgb(19, 97, 53);
-}
-
-#getLoan:active {
-    background-color: whitesmoke;
-    color: rgb(19, 97, 53);
-}
-
-#getLoan:disabled, #buyNow:disabled {
-    background-color: rgb(128, 128, 128);
-    color: whitesmoke;
-    cursor: not-allowed;
-}
-
-#repayLoan {
-    background-color: indianred;
-    color: white;
-    visibility: hidden;
-}
-
-#repayLoan:hover {
-    background-color: rgb(105, 17, 17);
-}
-
-#repayLoan:active {
-    background-color: whitesmoke;
-    color: rgb(105, 17, 17);
-}
-
-#repayLoan:disabled {
-    background-color: rgb(128, 128, 128);
-    color: whitesmoke;
-    cursor: not-allowed;
-}
-
-#buyNow {
-    background-color: darkmagenta;
-    color: white;
-}
-
-#buyNow:hover {
-    background-color: rgb(77, 1, 77);
-}
-
-#buyNow:active {
-    background-color: whitesmoke;
-    color: rgb(77, 1, 77);
-}
-
-#buyNow:disabled {
-    background-color: rgb(128, 128, 128);
-    color: whitesmoke;
-    cursor: not-allowed;
-}
-
-select {
-    width: 100%;
-    font-size: 16px;
-    padding: 1px;
-    border: 1px solid darkslategray;
-    border-radius: 5px;
-    outline: none;
-}
-
-#features {
+#featuresDiv {
     font-size: 14px;
     list-style-type: none;
 }
 
-img {
-    height: 150px;
-    border-radius: 5px;
-    object-fit: contain;
-}
-
-#laptopInfo {
+#laptopInfoDiv {
     width: 50%;
     margin-left: 20px;
     margin-right: 20px;
 }
 
-#laptopPrice {
+#laptopPriceDiv {
     color: darkslategray;
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: center;
     font-size: x-large;
     font-weight: bold;
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 
-#cannotAffordMessage {
+#cannotAffordMessageDiv {
     color: darkred;
-    text-align: center;
     height: 55px;
     padding-top: 5px;
+    text-align: center;
     visibility: hidden;
+}
+
+#workButton {
+    background-color: steelblue;
+    color: white;
+}
+
+#workButton:hover {
+    background-color: rgb(33, 88, 133);
+}
+
+#workButton:active {
+    background-color: whitesmoke;
+    color: rgb(33, 88, 133);
+}
+
+#bankButton {
+    background-color: goldenrod;
+    color: white;
+}
+
+#bankButton:hover {
+    background-color: darkgoldenrod;
+}
+
+#bankButton:active {
+    background-color: whitesmoke;
+    color: darkgoldenrod;
+}
+
+#getLoanButton {
+    background-color: seagreen;
+    color: white;
+}
+
+#getLoanButton:hover {
+    background-color: rgb(19, 97, 53);
+}
+
+#getLoanButton:active {
+    background-color: whitesmoke;
+    color: rgb(19, 97, 53);
+}
+
+#repayLoanButton {
+    background-color: indianred;
+    color: white;
+    visibility: hidden;
+}
+
+#repayLoanButton:hover {
+    background-color: rgb(105, 17, 17);
+}
+
+#repayLoanButton:active {
+    background-color: whitesmoke;
+    color: rgb(105, 17, 17);
+}
+
+#buyNowButton {
+    background-color: darkmagenta;
+    color: white;
+}
+
+#buyNowButton:hover {
+    background-color: rgb(77, 1, 77);
+}
+
+#buyNowButton:active {
+    background-color: whitesmoke;
+    color: rgb(77, 1, 77);
+}
+
+#bankButton:disabled, #getLoanButton:disabled, #repayLoanButton:disabled, #buyNowButton:disabled {
+    background-color: rgb(128, 128, 128);
+    color: whitesmoke;
+    cursor: not-allowed;
 }

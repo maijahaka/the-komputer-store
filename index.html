@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Komputer Store</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -19,15 +18,17 @@
                 <table>
                     <tr>
                         <td>Balance</td>
-                        <td class="right-column"><span id="balance">0</span> €</td>
+                        <td class="right-column"><span id="balanceSpan">0</span> €</td>
                     </tr>
                     <tr id="outstandingLoanTr">
                         <td>Outstanding loan</td>
-                        <td class="right-column"><span id="outstandingLoan">0</span> €</td>
+                        <td class="right-column"><span id="outstandingLoanSpan">0</span> €</td>
                     </tr>
                 </table>
                 <div class="container">
-                    <button id="getLoan" disabled>Get a loan</button>
+                    <button id="getLoanButton" disabled title="Apply for a loan. The maximum loan you can get is twice your current bank account balance. You can only get one loan before buying a laptop. You must repay your previous loan before applying for another one.">
+                        Get a loan
+                    </button>
                 </div>    
             </div>
             <div class="block">
@@ -35,43 +36,58 @@
                 <table>
                     <tr>
                         <td>Pay</td>
-                        <td class="right-column"><span id="pay">0</span> €</td>
+                        <td class="right-column"><span id="paySpan">0</span> €</td>
                     </tr>
+                    <!--An empty table row to keep the layout consistent-->
                     <tr>
                         <td>&nbsp;</td>
                     </tr>
                 </table>
                 <div class="container">
-                    <button id="bank" disabled>Bank</button>
-                    <button id="work">Work</button>
+                    <button id="bankButton" disabled title="Transfer money to your bank account. If you have an outstanding loan, 10 % of the amount is used for loan repayment.">
+                        Bank
+                    </button>
+                    <button id="workButton" title="Earn 100 €.">
+                        Work
+                    </button>
                 </div>
                 <div class="container">
-                    <button id="repayLoan" disabled>Repay loan</button>
+                    <button id="repayLoanButton" disabled title="Use your pay balance to repay an outstanding loan.">
+                        Repay loan
+                    </button>
                 </div>  
             </div>
             <div class="block">
                 <h3>Laptops</h3>
-                <select id="laptops"></select>
+                <!--Menu of available laptops-->
+                <select id="laptopsSelect"></select>
                 <h4>Features</h4>
-                <div id="features"></div>
+                <!--Features of the selected laptop-->
+                <div id="featuresDiv"></div>
             </div>
         </div>
         <div class="container">
             <div class="block">
                 <div class="container">
-                    <div id="laptopPhoto"></div>
-                    <div id="laptopInfo"></div>
+                    <!--Photo of the selected laptop-->
+                    <div id="laptopPhotoDiv"></div>
+                    <!--Name and description of the selected laptop-->
+                    <div id="laptopInfoDiv"></div>
                     <div id="buyLaptop">
-                        <div id="cannotAffordMessage">You cannot afford this laptop :(</div>
-                        <div id="laptopPrice"></div>
+                        <!--Message shown if trying to buy a laptop with insufficient bank account balance-->
+                        <div id="cannotAffordMessageDiv">You cannot afford this laptop :(</div>
+                        <!--Price of the selected laptop-->
+                        <div id="laptopPriceDiv"></div>
                         <div class="container">
-                            <button id="buyNow">Buy now</button>
+                            <button id="buyNowButton" title="Buy the selected laptop. For the purchase to succeed, you need to have sufficient balance on your bank account.">
+                                Buy now
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-    <script src="app.js"></script>
+    <script src="app.js" type="module"></script>
 </body>
 </html>
