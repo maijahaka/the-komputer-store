@@ -16,7 +16,7 @@ export const getLoanAmount = balance => {
             continue
         }
 
-        // Cents are rounded down to Euros
+        // Cents are rounded down to euros
         const amount = Math.floor(Number(input))
         
         if (isNaN(amount) || amount < 0) {
