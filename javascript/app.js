@@ -242,7 +242,7 @@ let laptops = [
             "It has a keyboard."
         ],
         description: "Great for casual web browsing.",
-        imageUrl: "/images/basic-laptop.jpg",
+        imageUrl: "images/basic-laptop.jpg",
         price: 600
     },
     {
@@ -252,7 +252,7 @@ let laptops = [
             "It has a soft-touch keyboard."
         ],
         description: "Perfect for working in a café while drinking a latte.",
-        imageUrl: "/images/premium-laptop.jpg",
+        imageUrl: "images/premium-laptop.jpg",
         price: 1800
     },
     {
@@ -262,7 +262,7 @@ let laptops = [
             "The keyboard has LED effects."
         ],
         description: "Name a game and you can play it with this laptop.",
-        imageUrl: "/images/gaming-laptop.jpg",
+        imageUrl: "images/gaming-laptop.jpg",
         price: 2200
     },
     {
@@ -272,7 +272,7 @@ let laptops = [
             "It has a quiet keyboard.",
         ],
         description: "Ideal for doing a bootcamp on JavaScript.",
-        imageUrl: "/images/professional-laptop.jpg",
+        imageUrl: "images/professional-laptop.jpg",
         price: 3200
     }
 ]

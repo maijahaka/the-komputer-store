@@ -30,7 +30,9 @@ By pressing the _Buy now_ button, the user can attempt to purchase the selected 
 
 ## How to use
 
-Download the contents of this directory and open _index.html_ in your browser. The application works in the newer versions of all main browsers.
+The application is accessible at https://maijahaka.github.io/the-komputer-store/.
+
+The application works in the newer versions of all main browsers.
 
 ## Picture credits
 
